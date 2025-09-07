@@ -1,0 +1,31 @@
+{
+  "name": "bonos-installer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "webpack --mode=development --watch",
+    "prod": "webpack --mode=production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/scout25b/BonOS-installer.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "GPL-2.0-only",
+  "bugs": {
+    "url": "https://github.com/scout25b/BonOS-installer/issues"
+  },
+  "homepage": "https://github.com/scout25b/BonOS-installer#readme",
+  "type": "module",
+  "devDependencies": {
+    "webpack": "^5.101.3",
+    "webpack-cli": "^6.0.1"
+  },
+  "dependencies": {
+    "archiver": "^7.0.1",
+    "jszip": "^3.10.1"
+  }
+}
