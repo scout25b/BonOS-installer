@@ -5,7 +5,12 @@ let button = document.createElement("button")
 button.textContent = "Install BonOS"
 button.id = "install"
 
-const settings = {updatedLook:false}
+let settings = {
+ username:"installer",
+ updatedLook: false,
+ password: ""
+}
+
 function showMenuInput(min, max, handler) {
   const input = document.createElement("input");
   input.type = "text";
@@ -78,6 +83,7 @@ function showTextInput(handler) {
   asciiEnter.style.margin = "0";
   asciiEnter.style.verticalAlign = "middle";
   asciiEnter.onclick = () => {
+    input.remove()
     input.remove()
     asciiEnter.remove()
     handler(input.value);
@@ -175,18 +181,34 @@ new_zip.loadAsync(zip)
 }
 InstallZip(BonOS, "BonOS")
 InstallZip(lagoonBoot, "lagoon-boot")
+let root = await rootDir.getDirectoryHandle("BonOS", { create: true });
+let usr = await root.getDirectoryHandle("usr", {create: true})
+const fsAPI = {}
+fsAPI.writeFile = async function(fileHandle, contents) {
+  // Create a FileSystemWritableFileStream to write to.
+  const writable = await fileHandle.createWritable();
+
+  // Write the contents of the file to the stream.
+  await writable.write(contents);
+
+  // Close the file and write the contents to disk.
+  await writable.close();
+}
+fsAPI.writeFile(await usr.getFileHandle("settings.json", {create:true}), JSON.stringify(settings))
 
 })
 ;(async()=>{
 await typeWriter("What's your name?\n", 50)
 showTextInput(async(text)=>{
-    let name = text
+    let username = text
     await typeWriter("Hello, "+text+"\n", 50)
     await typeWriter("Enter your new password\n", 50)
     showTextInput(async(text2)=>{
         let password = text2
         await typeWriter("Select a folder to install BonOS and lagoon boot to\n", 100)
         document.querySelector("p").appendChild(button)
+        settings.password = password
+        settings.username = username
     })
 })
 })();
