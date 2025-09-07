@@ -1,0 +1,6 @@
+[submodule "BonOS"]
+	path = BonOS
+	url = https://github.com/scout25b/BonOS
+[submodule "lagoon-boot"]
+	path = lagoon-boot
+	url = https://github.com/minidogg/lagoon-boot
