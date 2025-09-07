@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>bingbong.exe</title>
+  <link rel="icon" href="./favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="description" content="BonOS is a fictional operating system that is designed to be a parody of real operating systems. It is not meant to be taken seriously and is intended for entertainment purposes only.">
+  <meta name="keywords" content="BonOS, operating system, parody, fictional, entertainment">
+  <meta name="author" content="Bon the car man">
+  <style>
+      body {
+    font-family: system-ui;
+    background: #0d06;
+    color: green;
+    text-align: center;
+  }
+  </style>
+  <style>
+    body {
+      background-color: black;
+      color: lime;
+      font-family: "Courier New";
+      font-size: 16px;
+    }
+    p {
+      white-space: pre-wrap;
+      height: 80vh;
+      overflow-y: auto;
+      margin: 0;
+      padding: 1em;
+      position: relative;
+      z-index: 1;
+    }
+    #install {
+      position: relative;
+      z-index: 1;
+    }
+    #smile-column {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 48px;
+      height: 100vh;
+      background: transparent;
+      color: lime;
+      font-family: "Courier New", monospace;
+      font-size: 20px;
+      z-index: 0;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      pointer-events: none;
+      user-select: none;
+    }
+    #bonos-logo {
+      position: absolute;
+      z-index: 0;
+      color: lime;
+      font-family: 'Courier New', monospace;
+      font-size: 24px;
+      pointer-events: none;
+      user-select: none;
+      transition: all 0.5s;
+    }
+    #explosion {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: black;
+      color: red;
+      font-family: 'Courier New', monospace;
+      font-size: 32px;
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      display: none;
+    }
+    #bunny-container {
+      position: absolute;
+      top: 80px;
+      right: 40px;
+      width: 220px;
+      height: 220px;
+      z-index: 2;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      pointer-events: none;
+    }
+    #datetime-box {
+      position: absolute;
+      right: 40px;
+      top: 310px;
+      min-width: 180px;
+      background: transparent;
+      color: lime;
+      font-family: 'Courier New', monospace;
+      font-size: 16px;
+      border-radius: 8px;
+      padding: 0;
+      text-align: center;
+      z-index: 2;
+      display: none;
+      pointer-events: none;
+    }
+    #paint-canvas {
+      display: block;
+      margin: 16px auto;
+      cursor: crosshair;
+      z-index: 10;
+      border: 2px solid lime;
+      background: black;
+    }
+  </style>
+</head>
+<body>
+  <p></p>
+  <div id="bonos-logo">BONOS</div>
+  <div id="smile-column"></div>
+  <div id="bunny-container"></div>
+  <div id="datetime-box"></div>
+  <pre id="explosion"></pre>
+ <script>
+
+    "script-data"
+
+
+
+  </script>
+
+
+</body>
+</html>
