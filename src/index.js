@@ -3,7 +3,103 @@ import BonOS from './BonOS.folder'
 import lagoonBoot from './lagoon-boot.folder'
 let button = document.createElement("button")
 button.textContent = "Install BonOS"
-document.body.appendChild(button)
+button.id = "install"
+
+const settings = {updatedLook:false}
+function showMenuInput(min, max, handler) {
+  const input = document.createElement("input");
+  input.type = "text";
+  input.id = "menuInput";
+  input.maxLength = 2;
+  input.style.background = settings.updatedLook ? "#222" : "black";
+  input.style.color = settings.updatedLook ? "#00ffea" : "lime";
+  input.style.fontFamily = settings.updatedLook ? "'Segoe UI', 'Courier New', monospace" : '"Courier New"';
+  input.style.fontSize = settings.updatedLook ? "18px" : "16px";
+  input.style.border = settings.updatedLook ? "1px solid #00ffea" : "1px solid lime";
+  input.style.width = "3em";
+  input.style.marginRight = "1em";
+  input.style.outline = "none";
+
+  const asciiEnter = document.createElement("pre");
+  asciiEnter.id = "asciiEnter";
+  asciiEnter.textContent = `
++---------+
+|  ENTER  |
++---------+
+`;
+  asciiEnter.style.display = "inline-block";
+  asciiEnter.style.cursor = "pointer";
+  asciiEnter.style.color = settings.updatedLook ? "#00ffea" : "lime";
+  asciiEnter.style.margin = "0";
+  asciiEnter.style.verticalAlign = "middle";
+  asciiEnter.onclick = () => {
+    input.remove()
+    asciiEnter.remove()
+    const val = input.value.trim();
+    const num = Number(val);
+    if (num >= min && num <= max) {
+      handler(num);
+    } else {
+      clearTerminal();
+      typeWriter("Invalid option. Try again.\n", 50).then(() => handler("invalid"));
+    }
+  };
+
+  document.body.appendChild(input);
+  document.body.appendChild(asciiEnter);
+  input.focus();
+}
+
+
+function showTextInput(handler) {
+  const input = document.createElement("input");
+  input.type = "text";
+  input.id = "menuInput";
+//   input.maxLength = 2;
+  input.style.background = settings.updatedLook ? "#222" : "black";
+  input.style.color = settings.updatedLook ? "#00ffea" : "lime";
+  input.style.fontFamily = settings.updatedLook ? "'Segoe UI', 'Courier New', monospace" : '"Courier New"';
+  input.style.fontSize = settings.updatedLook ? "18px" : "16px";
+  input.style.border = settings.updatedLook ? "1px solid #00ffea" : "1px solid lime";
+  input.style.width = "3em";
+  input.style.marginRight = "1em";
+  input.style.outline = "none";
+
+  const asciiEnter = document.createElement("pre");
+  asciiEnter.id = "asciiEnter";
+  asciiEnter.textContent = `
++---------+
+|  ENTER  |
++---------+
+`;
+  asciiEnter.style.display = "inline-block";
+  asciiEnter.style.cursor = "pointer";
+  asciiEnter.style.color = settings.updatedLook ? "#00ffea" : "lime";
+  asciiEnter.style.margin = "0";
+  asciiEnter.style.verticalAlign = "middle";
+  asciiEnter.onclick = () => {
+    input.remove()
+    asciiEnter.remove()
+    handler(input.value);
+  };
+
+  document.body.appendChild(input);
+  document.body.appendChild(asciiEnter);
+  input.focus();
+}
+
+
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+async function typeWriter(text, delay) {
+  for (let i = 0; i < text.length; i++) {
+    document.querySelector("p").textContent += text[i];
+    await sleep(settings.fastType==true?1:delay);
+  }
+}
+
+
+
 button.addEventListener("click", async()=>{
 let rootDir = await window.showDirectoryPicker()
 function basename(path) {
@@ -13,6 +109,8 @@ function basename(path) {
     }
     return e[e.length-1]
 }
+
+
 
 function InstallZip(zip, dirName){
 var new_zip = new JSZip();
@@ -39,7 +137,18 @@ new_zip.loadAsync(zip)
     // })
     // }
     // await InstallDir(zip, root)
+    let br = document.createElement("br")
+    document.querySelector("p").appendChild(br)
+    let progress = document.createElement("progress")
+    progress.max=1
+    document.querySelector("p").appendChild(progress)
+    let br2 = document.createElement("br")
+    document.querySelector("p").appendChild(br2)
+
+    let mi = Object.keys(zip.files).length
+    let i = 0;
     for(let path of Object.keys(zip.files)){
+
         let e = path.split("/").filter(e=>e!="")
         let handle = root
         while(e.length>=2){
@@ -57,12 +166,27 @@ new_zip.loadAsync(zip)
             await writable.write(data);
             await writable.close();
         }
+        progress.value = ((i++)/mi)*1
     }
-    alert("Installed "+dirName+"!")
+    document.querySelector("p").innerHTML+=("Installed "+dirName+"!<br>")
 
 });
 
 }
 InstallZip(BonOS, "BonOS")
 InstallZip(lagoonBoot, "lagoon-boot")
+
 })
+;(async()=>{
+await typeWriter("What's your name?\n", 50)
+showTextInput(async(text)=>{
+    let name = text
+    await typeWriter("Hello, "+text+"\n", 50)
+    await typeWriter("Enter your new password\n", 50)
+    showTextInput(async(text2)=>{
+        let password = text2
+        await typeWriter("Select a folder to install BonOS and lagoon boot to\n", 100)
+        document.querySelector("p").appendChild(button)
+    })
+})
+})();
